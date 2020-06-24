@@ -18,18 +18,17 @@ def is_chinese(ch):
 
 
 def covertsub_out(inputname):
-    f = open(inputname, "r", encoding="UTF-8")
-    fo = open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8")
-    lines = f.readlines()
-    for line in lines:
-        if len(line) > 5 and not is_chinese(line) and \
-                (is_alphabet(line[2]) or is_alphabet(line[3]) or is_alphabet(line[4]) or is_alphabet(line[5])):
-            pass
-        else:
-            fo.write(line)
-    fo.close()
-    f.close()
+    with open(inputname, "r", encoding="UTF-8") as f:
+        lines = f.readlines()
 
+    with open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8") as fo:
+
+        for line in lines:
+            if len(line) > 5 and not is_chinese(line) and \
+                    (is_alphabet(line[2]) or is_alphabet(line[3]) or is_alphabet(line[4]) or is_alphabet(line[5])):
+                pass
+            else:
+                fo.write(line)
     print("完成！")
 
 
