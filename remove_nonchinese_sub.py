@@ -2,6 +2,15 @@
 # Created by: ERMAC
 # Created data: 2020/6/24
 # 去除Srt字幕文件中非中文字幕
+import chardet
+
+
+def detect_encoding(filename):
+    with open(filename, 'rb') as f:
+        data = f.read()
+    encode_type = chardet.detect(data)
+    return encode_type['encoding']
+
 
 def is_alphabet(ch):
     if (u"\u0041" <= ch <= u"\u005a") or (u"\u0061" <= ch <= u"\u007a"):
@@ -18,7 +27,7 @@ def is_chinese(ch):
 
 
 def covertsub_out(inputname):
-    with open(inputname, "r", encoding="UTF-8") as f:
+    with open(inputname, "r", encoding=detect_encoding(inputname)) as f:
         lines = f.readlines()
 
     with open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8") as fo:
