@@ -48,7 +48,7 @@ def covertsub_out(inputname):
 
 if __name__ == "__main__":
     inputname = input("输入文件名：")
-try:
-    covertsub_out(inputname)
-except Exception as result:
-    print('出现错误！可能原因：请去掉文件名中的空格\n', result)
+    try:
+        covertsub_out(inputname)
+    except Exception as result:
+        print('出现错误！可能原因：请去掉文件名中的空格\n', result)
