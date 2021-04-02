@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Created by: ERMAC
-# Created data: 2020/6/24
-# 去除Srt字幕文件中非中文字幕
+# Created data: 2020/6/27
+# 去除srt字幕文件中非中文字幕
 import chardet
 
 
@@ -26,21 +26,29 @@ def is_chinese(ch):
     return False
 
 
+def is_timeline(ch):
+    if ch.find('-->') >= 0:
+        return True
+    else:
+        return False
+
+
 def covertsub_out(inputname):
     with open(inputname, "r", encoding=detect_encoding(inputname)) as f:
         lines = f.readlines()
 
     with open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8") as fo:
-
         for line in lines:
-            if len(line) > 5 and not is_chinese(line) and \
-                    (is_alphabet(line[2]) or is_alphabet(line[3]) or is_alphabet(line[4]) or is_alphabet(line[5])):
-                pass
-            else:
+            if line.strip().isdigit() or is_timeline(line) or line == '\n' or is_chinese(line):
                 fo.write(line)
+            else:
+                pass
     print("完成！")
 
 
 if __name__ == "__main__":
     inputname = input("输入文件名：")
-    covertsub_out(inputname)
+    try:
+        covertsub_out(inputname)
+    except Exception as result:
+        print('出现错误！可能原因：请去掉文件名中的空格\n', result)
