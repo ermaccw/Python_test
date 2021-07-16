@@ -51,4 +51,4 @@ if __name__ == "__main__":
     try:
         convertsub_out(inputname)
     except Exception as result:
-        print('出现错误！可能原因：请去掉文件名中的空格\n', result)
+        print('出现错误：', result)
