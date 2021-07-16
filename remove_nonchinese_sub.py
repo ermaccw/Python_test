@@ -12,31 +12,31 @@ def detect_encoding(filename):
     return encode_type['encoding']
 
 
-def is_alphabet(ch):
-    if (u"\u0041" <= ch <= u"\u005a") or (u"\u0061" <= ch <= u"\u007a"):
-        return True
-    else:
-        return False
+def is_alphabet(str):
+    for i in str:
+        if u'\u4e00' <= i <= u'\u9fff':
+            return False
+        elif (u"\u0041" <= i <= u"\u005a") or (u"\u0061" <= i <= u"\u007a"):
+            pass
+    return True
 
 
-def is_chinese(ch):
-    for i in ch:
+def is_chinese(str):
+    for i in str:
         if u'\u4e00' <= i <= u'\u9fff':
             return True
     return False
 
 
-def is_timeline(ch):
-    if ch.find('-->') >= 0:
+def is_timeline(str):
+    if '-->' in str:
         return True
-    else:
-        return False
+    return False
 
 
-def covertsub_out(inputname):
+def convertsub_out(inputname):
     with open(inputname, "r", encoding=detect_encoding(inputname)) as f:
         lines = f.readlines()
-
     with open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8") as fo:
         for line in lines:
             if line.strip().isdigit() or is_timeline(line) or line == '\n' or is_chinese(line):
@@ -47,8 +47,8 @@ def covertsub_out(inputname):
 
 
 if __name__ == "__main__":
-    inputname = input("输入文件名：")
+    inputname = input("输入文件名：").strip()
     try:
-        covertsub_out(inputname)
+        convertsub_out(inputname)
     except Exception as result:
         print('出现错误！可能原因：请去掉文件名中的空格\n', result)
