@@ -14,11 +14,10 @@ def detect_encoding(filename):
 
 def is_alphabet(str):
     for i in str:
-        if u'\u4e00' <= i <= u'\u9fff':
+        if (u'\u4e00' <= i <= u'\u9fff') or (i == '\n'):
             return False
         elif (u"\u0041" <= i <= u"\u005a") or (u"\u0061" <= i <= u"\u007a"):
-            pass
-    return True
+            return True
 
 
 def is_chinese(str):
@@ -29,9 +28,7 @@ def is_chinese(str):
 
 
 def is_timeline(str):
-    if '-->' in str:
-        return True
-    return False
+    return '-->' in str
 
 
 def convertsub_out(inputname):
