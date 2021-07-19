@@ -18,6 +18,10 @@ def is_alphabet(str):
             return False
         elif (u"\u0041" <= i <= u"\u005a") or (u"\u0061" <= i <= u"\u007a"):
             return True
+        elif i == '-':
+            if (u"\u0041" <= str[2] <= u"\u005a") or (u"\u0061" <= str[2] <= u"\u007a"):
+                return True
+            return False
 
 
 def is_chinese(str):
