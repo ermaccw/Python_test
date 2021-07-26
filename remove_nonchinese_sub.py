@@ -35,12 +35,16 @@ def is_timeline(str):
     return '-->' in str
 
 
+def is_titleline(str):
+    return str.strip().isdigit()
+
+
 def convertsub_out(inputname):
     with open(inputname, "r", encoding=detect_encoding(inputname)) as f:
         lines = f.readlines()
     with open(inputname[:-4] + "_out.srt", "w", encoding="UTF-8") as fo:
         for line in lines:
-            if line.strip().isdigit() or is_timeline(line) or line == '\n' or is_chinese(line):
+            if is_titleline(line) or is_timeline(line) or line == '\n' or is_chinese(line):
                 fo.write(line)
             else:
                 pass
@@ -48,8 +52,10 @@ def convertsub_out(inputname):
 
 
 if __name__ == "__main__":
-    inputname = input("输入文件名：").strip()
     try:
+        inputname = input("输入文件名：").strip('"').strip()
         convertsub_out(inputname)
     except Exception as result:
         print('出现错误：', result)
+    except KeyboardInterrupt:
+        pass
